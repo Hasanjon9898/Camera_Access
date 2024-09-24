@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone Camera Access</title>
+</head>
+<body>
+    <h1>Access iPhone Camera</h1>
+    <video id="video" width="320" height="240" autoplay></video>
+    <button id="snap">Capture</button>
+    <canvas id="canvas" width="320" height="240"></canvas>
+
+    <script>
+        // Access the user's camera
+        const video = document.getElementById('video');
+
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                video.srcObject = stream;
+                video.play();
+            });
+        }
+
+        // Capture the photo when the button is clicked
+        const canvas = document.getElementById('canvas');
+        const snap = document.getElementById('snap');
+
+        snap.addEventListener("click", function() {
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, 320, 240);
+        });
+    </script>
+</body>
+</html>
